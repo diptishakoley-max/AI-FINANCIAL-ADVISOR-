@@ -130,17 +130,6 @@ with st.sidebar:
 
     generate_btn = st.button("Financial Analysis & Advice")
 
-# Process when button is clicked
-if generate_btn:
-    user_data = st.session_state.user_data
-    st.session_state.analysis_data = analyze_finances(user_data)
-
-    with st.spinner("🤖 Generating personalized financial advice..."):
-        st.session_state.generated_advice = generate_financial_advice(user_data, st.session_state.analysis_data)
-
-    st.session_state.goal_plan = None
-    st.session_state.chat_history = []
-
 # MAIN CONTENT AREA
 if st.session_state.user_data and st.session_state.user_data['income'] > 0:
 
@@ -153,10 +142,14 @@ if st.session_state.user_data and st.session_state.user_data['income'] > 0:
 
     if generate_btn:
         st.session_state.analysis_data = analyze_finances(st.session_state.user_data)
-        st.session_state.generated_advice = generate_financial_advice(
-            st.session_state.user_data,
-            st.session_state.analysis_data
-        )
+        with st.spinner("Generating personalized financial advice..."):
+            st.session_state.generated_advice = generate_financial_advice(
+                st.session_state.user_data,
+                st.session_state.analysis_data
+            )
+        st.session_state.goal_plan = None
+        st.session_state.chat_history = []
+        st.success("Financial analysis generated successfully!")
 
     if st.session_state.analysis_data:
         ad = st.session_state.analysis_data
@@ -425,18 +418,28 @@ if st.session_state.user_data and st.session_state.user_data['income'] > 0:
                 ask_btn = st.button("📩 Send Message", use_container_width=True)
 
             if ask_btn:
-                if st.session_state.user_query.strip():
-                    with st.spinner("🤖 Thinking..."):
-                        response = finance_chatbot_response(
-                            st.session_state.user_data, ad, st.session_state.user_query
-                        )
-                    st.session_state.chat_history.append({
-                        "user": st.session_state.user_query,
-                        "bot": response
-                    })
-                    st.rerun()
+                if not st.session_state.user_query.strip():
+                    st.warning("Please enter a question before sending.")
+                elif not st.session_state.user_data or st.session_state.user_data.get("income", 0) == 0:
+                    st.error("Please enter your financial details in the sidebar before using the chatbot.")
+                elif not st.session_state.analysis_data:
+                    st.error("Please generate your financial analysis first.")
                 else:
-                    st.warning("Please type a question.")
+                    with st.spinner("Analyzing your question..."):
+                        try:
+                            response = finance_chatbot_response(
+                                st.session_state.user_data,
+                                st.session_state.analysis_data,
+                                st.session_state.user_query
+                            )
+                            st.session_state.chat_history.append({
+                                "user": st.session_state.user_query,
+                                "bot": response
+                            })
+                            st.session_state.user_query = ""
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Chatbot Error: {e}")
 
         with chat_col2:
             st.markdown("""
@@ -457,3 +460,62 @@ else:
     <div style='text-align: center; padding: 3rem; color: #666;'>
         <h3>👈 Fill in your financial details in the sidebar and click "Financial Analysis & Advice" to get started!</h3>
     </div>""", unsafe_allow_html=True)
+
+# ABOUT TOOL SECTION
+st.markdown("---")
+st.markdown("""
+<div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);'>
+    <h2 style='color: white; font-size: 1.8rem; margin-bottom: 0.5rem;'>ℹ️ About This Tool</h2>
+    <p style='font-size: 1rem; color: #f0f0f0;'>Your AI-Powered Financial Planning Companion</p>
+</div>
+""", unsafe_allow_html=True)
+
+about_col1, about_col2, about_col3 = st.columns(3)
+
+with about_col1:
+    st.markdown("""
+    <div class='card'>
+        <div class='card-title'>🎯 Purpose</div>
+        <div class='card-content'>
+            <p>The AI Financial Advisor is designed to provide personalized financial guidance
+            using advanced AI. It analyzes your income, expenses, debts, and savings to generate
+            tailored advice, goal-oriented plans, and interactive financial insights.</p>
+        </div>
+    </div>""", unsafe_allow_html=True)
+
+with about_col2:
+    st.markdown("""
+    <div class='card'>
+        <div class='card-title'>💡 Use Case</div>
+        <div class='card-content'>
+            <ul style='margin:0; padding-left:18px;'>
+                <li>Students managing allowances & part-time income</li>
+                <li>Professionals planning budgets & investments</li>
+                <li>Anyone seeking debt management strategies</li>
+                <li>Goal-based financial planning (e.g., emergency fund, retirement)</li>
+                <li>Interactive Q&A for financial literacy</li>
+            </ul>
+        </div>
+    </div>""", unsafe_allow_html=True)
+
+with about_col3:
+    st.markdown("""
+    <div class='card'>
+        <div class='card-title'>🛠️ Technologies</div>
+        <div class='card-content'>
+            <ul style='margin:0; padding-left:18px;'>
+                <li><strong>Streamlit</strong> — Interactive web UI</li>
+                <li><strong>Google Gemini AI</strong> — AI-powered advice generation</li>
+                <li><strong>Matplotlib & Seaborn</strong> — Data visualization</li>
+                <li><strong>Python</strong> — Core backend logic</li>
+                <li><strong>Custom CSS</strong> — Professional dashboard styling</li>
+            </ul>
+        </div>
+    </div>""", unsafe_allow_html=True)
+
+st.markdown("<p style='text-align:center; color:#999; font-size:0.85rem; margin-top:2rem;'>Built with ❤️ using Streamlit & Google Gemini AI</p>", unsafe_allow_html=True)
