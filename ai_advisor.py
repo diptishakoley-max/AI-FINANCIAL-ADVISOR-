@@ -1,14 +1,15 @@
 # AI Reasoning Module
 import os
 from dotenv import load_dotenv
-from google import genai
+import google.generativeai as genai
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
 model = None
 if api_key:
-    model = genai.Client(api_key=api_key)
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-2.5-flash")
 
 
 def generate_financial_advice(user_data, analysis_data):
@@ -61,9 +62,7 @@ Output:
 - Ready-to-read actionable plan that incorporates existing savings
 """
     try:
-        response = model.models.generate_content(
-            model="gemini-2.5-flash", contents=prompt
-        )
+        response = model.generate_content(prompt)
         return response.text.strip()
     except Exception as e:
         return f"Gemini API Error: {e}"
@@ -152,9 +151,7 @@ Output Requirements:
 - Do not use numbering the points just bullet points
 """
     try:
-        response = model.models.generate_content(
-            model="gemini-2.5-flash", contents=prompt
-        )
+        response = model.generate_content(prompt)
         return response.text.strip()
     except Exception as e:
         return f"Gemini API Error: {e}"
@@ -202,9 +199,7 @@ Output:
     try:
         if model is None:
             return "Gemini model not configured. Set GEMINI_API_KEY to use AI responses."
-        response = model.models.generate_content(
-            model="gemini-2.5-flash", contents=prompt
-        )
+        response = model.generate_content(prompt)
         return response.text.strip()
     except Exception as e:
         return f"Gemini API Error: {e}"
