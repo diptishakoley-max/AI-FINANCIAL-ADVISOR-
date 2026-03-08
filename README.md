@@ -7,7 +7,7 @@
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.55-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
 [![Gemini AI](https://img.shields.io/badge/Google%20Gemini-2.5--flash-4285F4?logo=google&logoColor=white)](https://ai.google.dev)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 
 An intelligent financial advisory web application that leverages **Google Gemini AI** to deliver personalized financial insights, goal-oriented planning, interactive visualizations, and a real-time financial chatbot — all through an elegant Streamlit dashboard.
 
