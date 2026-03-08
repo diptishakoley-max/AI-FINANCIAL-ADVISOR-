@@ -432,6 +432,11 @@ if st.session_state.user_data and st.session_state.user_data['income'] > 0:
                                 st.session_state.analysis_data,
                                 st.session_state.user_query
                             )
+                            print(f"\n{'='*60}")
+                            print(f"USER: {st.session_state.user_query}")
+                            print(f"{'-'*60}")
+                            print(f"BOT: {response}")
+                            print(f"{'='*60}\n")
                             st.session_state.chat_history.append({
                                 "user": st.session_state.user_query,
                                 "bot": response
