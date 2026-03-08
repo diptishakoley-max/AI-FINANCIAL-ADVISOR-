@@ -6,7 +6,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.55-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
-[![Gemini AI](https://img.shields.io/badge/Google%20Gemini-2.0--flash-4285F4?logo=google&logoColor=white)](https://ai.google.dev)
+[![Gemini AI](https://img.shields.io/badge/Google%20Gemini-2.5--flash-4285F4?logo=google&logoColor=white)](https://ai.google.dev)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 An intelligent financial advisory web application that leverages **Google Gemini AI** to deliver personalized financial insights, goal-oriented planning, interactive visualizations, and a real-time financial chatbot — all through an elegant Streamlit dashboard.
@@ -17,15 +17,25 @@ An intelligent financial advisory web application that leverages **Google Gemini
 
 ## 📋 Table of Contents
 
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Configuration](#-configuration)
-- [Usage](#-usage)
-- [Screenshots](#-screenshots)
-- [Modules Overview](#-modules-overview)
-- [Contributing](#-contributing)
+- [💰 AI Financial Advisor](#-ai-financial-advisor)
+  - [📋 Table of Contents](#-table-of-contents)
+  - [✨ Features](#-features)
+  - [🛠️ Tech Stack](#️-tech-stack)
+  - [📁 Project Structure](#-project-structure)
+  - [🚀 Getting Started](#-getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+  - [⚙️ Configuration](#️-configuration)
+  - [📖 Usage](#-usage)
+  - [📸 Screenshots](#-screenshots)
+  - [🔍 Modules Overview](#-modules-overview)
+    - [`app.py`](#apppy)
+    - [`ai_advisor.py`](#ai_advisorpy)
+    - [`finance_analysis.py`](#finance_analysispy)
+    - [`visualization.py`](#visualizationpy)
+    - [`utils.py`](#utilspy)
+    - [`styles.css`](#stylescss)
+  - [🤝 Contributing](#-contributing)
 
 ---
 
